@@ -1776,7 +1776,10 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                         ? (isOutput ? context.OutputsPerPatch : context.InputsPerPatch)
                         : (isOutput ? context.Outputs : context.Inputs);
 
-                    baseObj = dict[ioDefinition];
+                    if (!dict.TryGetValue(ioDefinition, out baseObj))
+{
+    baseObj = context.Constant(context.TypeU32(), 0);
+}
                     break;
 
                 default:
