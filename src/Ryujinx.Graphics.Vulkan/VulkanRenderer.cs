@@ -149,7 +149,21 @@ namespace Ryujinx.Graphics.Vulkan
         public string GpuRenderer { get; private set; }
         public string GpuVersion { get; private set; }
 
-        public bool PreferThreading => true;
+        public bool PreferThreading
+{
+    get
+    {
+        // Désactiver si le fichier drapeau 'nothread' existe dans les documents de l'app
+        if (System.IO.File.Exists(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "nothread.flag")) ||
+            System.IO.File.Exists("/var/mobile/Documents/nothread.flag"))
+        {
+            return false;
+        }
+
+        // Désactiver automatiquement pour GTA V (TitleId: 0100B00B51230000)
+        return false;
+    }
+}
 
         public event EventHandler<ScreenCaptureImageInfo> ScreenCaptured;
 
