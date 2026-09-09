@@ -100,21 +100,14 @@ namespace Ryujinx.Graphics.GAL.Multithreading
         }
 
         public void RunLoop(ThreadStart gpuLoop)
-        {
-            _running = true;
+{
+    _running = true;
 
-            _backendThread = Thread.CurrentThread;
+    _backendThread = Thread.CurrentThread;
+    _gpuThread = Thread.CurrentThread;
 
-            _gpuThread = new Thread(gpuLoop)
-            {
-                Name = "GPU.MainThread",
-            };
-
-            _gpuThread.Start();
-
-            RenderLoop();
-        }
-
+    gpuLoop();
+}
         public void RenderLoop()
         {
             // Power through the render queue until the Gpu thread work is done.
