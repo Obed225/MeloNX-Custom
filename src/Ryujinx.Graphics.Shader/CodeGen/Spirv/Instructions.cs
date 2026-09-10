@@ -1779,7 +1779,7 @@ namespace Ryujinx.Graphics.Shader.CodeGen.Spirv
                     if (!dict.TryGetValue(ioDefinition, out baseObj))
 {
     SpvInstruction dummyPtrType = context.TypePointer(StorageClass.Private, context.GetType(varType));
-    baseObj = context.AddVariable(dummyPtrType, StorageClass.Private);
+    baseObj = context.Variable(dummyPtrType, StorageClass.Private);
     dict[ioDefinition] = baseObj;
 }
                     break;
